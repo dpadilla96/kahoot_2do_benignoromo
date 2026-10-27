@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#15143b" />
+  <meta name="description" content="Quiz interactivo de 30 preguntas para segundo de secundaria con constancia PDF personalizada." />
+  <title>SECUNDARIA | Reto Tech - Segundo grado</title>
+  <style>
+    :root{color-scheme:dark;--bg:#11112f;--ink:#f9f8ff;--muted:#c1c2df;--purple:#8e55fc;--pink:#ef62b0;--aqua:#59e2dc;--green:#48d4a5;--yellow:#ffcc62;--card:#222049;--border:rgba(255,255,255,.14);--shadow:0 25px 75px rgba(2,3,20,.27)}
+    *,*::before,*::after{box-sizing:border-box}
+    html{min-height:100%;scroll-behavior:smooth}
+    body{min-height:100vh;margin:0;background:radial-gradient(ellipse at 8% 12%,rgba(107,73,223,.28),transparent 37%),radial-gradient(ellipse at 95% 75%,rgba(232,68,154,.18),transparent 38%),#11112f;color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5;overflow-x:hidden}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:radial-gradient(#dddfff 1px,transparent 1px);background-size:33px 33px;mask-image:linear-gradient(120deg,transparent 14%,#000 90%)}
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    button:disabled{opacity:.55;cursor:not-allowed}
+    :focus-visible{outline:3px solid var(--aqua);outline-offset:4px}
+    .app{width:min(1200px,calc(100% - 44px));min-height:100vh;margin:0 auto;display:flex;flex-direction:column;position:relative;z-index:1}
+    header{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:23px 0}
+    .brand{display:flex;align-items:center;gap:13px;font-weight:950;letter-spacing:.045em;font-size:1.18rem}
+    .brand-icon{width:45px;height:45px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(140deg,var(--purple),#ba5efb);box-shadow:0 9px 28px #7440ed55;color:#fff;font-size:1.5rem}
+    .brand small{display:block;color:#bdb4fb;font-weight:700;font-size:.7rem;letter-spacing:.16em;margin-top:-1px}
+    .header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:999px;background:#ffffff0d;padding:8px 14px;color:#f1eaff;font-size:.82rem;font-weight:750}
+    .icon-button{color:#fff;border:1px solid var(--border);border-radius:11px;background:#ffffff10;padding:9px 12px;font-size:.83rem;font-weight:800;white-space:nowrap}
+    .icon-button:hover{background:#ffffff22}
+    main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:22px 0 45px}
+    .screen{width:100%;animation:fadeUp .4s ease both}
+    .screen[hidden], [hidden]{display:none!important}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .landing{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(340px,.96fr);align-items:center;gap:clamp(30px,7vw,94px)}
+    .eyebrow{display:inline-flex;gap:9px;align-items:center;text-transform:uppercase;font-size:.77rem;letter-spacing:.15em;font-weight:950;color:#d6c9ff}
+    .eyebrow .spark{color:var(--yellow);font-size:1.1rem}
+    h1{font-size:clamp(2.9rem,6.2vw,5.7rem);line-height:1.035;letter-spacing:-.055em;margin:20px 0 22px;font-weight:1000}
+    .gradient-text{background:linear-gradient(90deg,#a790ff 4%,#fa75c7 58%,#ffb880);background-clip:text;-webkit-background-clip:text;color:transparent}
+    .lead{font-size:clamp(1rem,1.5vw,1.17rem);color:var(--muted);max-width:540px;line-height:1.75;margin:0 0 28px}
+    .pillrow{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:30px}
+    .topic-pill{border:1px solid #ffffff1e;padding:8px 12px;border-radius:12px;background:#ffffff0d;font-weight:750;color:#eeeaff;font-size:.78rem}
+    .feature-line{display:flex;gap:18px;flex-wrap:wrap;color:#bdbfe1;font-size:.83rem}
+    .feature-line b{color:#f4f4ff}
+    .form-card{background:linear-gradient(150deg,#302b66 0%,#222047 76%);border:1px solid #ffffff24;border-radius:28px;box-shadow:var(--shadow);padding:clamp(23px,3.7vw,38px);position:relative;overflow:hidden}
+    .form-card:before{content:"";position:absolute;right:-65px;top:-80px;width:210px;height:210px;background:radial-gradient(circle,#cb70fa57,transparent 70%);pointer-events:none}
+    .form-top{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+    .big-emoji{width:60px;height:60px;flex:none;border-radius:19px;background:linear-gradient(135deg,#7c4dff,#dd5bbb);display:grid;place-items:center;font-size:2rem;box-shadow:0 13px 23px #17113f7d}
+    .form-top h2{font-size:1.58rem;letter-spacing:-.04em;margin:0}
+    .form-top p{color:#c8c0e7;margin:3px 0 0;font-size:.9rem}
+    label{font-size:.86rem;font-weight:800;display:block;margin:16px 0 8px;color:#f3efff}
+    .form-field{display:block;width:100%;background:#151532b5;border:1px solid #b5a5f355;color:#fff;padding:14px 16px;border-radius:12px;outline:none;min-height:53px;transition:border-color .2s,box-shadow .2s}
+    .form-field::placeholder{color:#9a97bd}
+    .form-field:focus{border-color:#ba9eff;box-shadow:0 0 0 4px #a88af427}
+    select.form-field{appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23ffffff" stroke-width="2"%3E%3Cpath d="m6 9 6 6 6-6"/%3E%3C/svg%3E');background-position:right 15px center;background-repeat:no-repeat;background-color:#151532b5;padding-right:38px}
+    option{color:#151532;background:#fff}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .primary{border:0;border-radius:14px;padding:15px 22px;background:linear-gradient(100deg,#8d5afc,#d45af1);box-shadow:0 10px 25px #8e55fc55;color:white;font-size:1rem;font-weight:950;letter-spacing:.01em;transition:transform .17s ease,filter .17s ease;white-space:normal}
+    .primary:hover{transform:translateY(-2px);filter:brightness(1.12)}
+    .primary:active{transform:translateY(0)}
+    .primary.wide{width:100%;margin-top:24px;min-height:58px}
+    .secondary{border:1px solid #ffffff3b;background:#ffffff13;color:#fff;border-radius:13px;padding:13px 20px;font-weight:850}
+    .secondary:hover{background:#ffffff22}
+    .privacy{color:#bdb4d7;font-size:.78rem;line-height:1.6;margin:13px 0 0;text-align:center}
+    .notice{margin:12px 0 0;font-size:.85rem;color:#ffe1a3;min-height:1rem}
+    .quiz-layout{max-width:1080px;margin:0 auto;width:100%}
+    .quiz-top{display:flex;gap:15px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}
+    .question-count{color:#d2c8fb;font-size:.97rem;font-weight:900}
+    .question-count strong{color:white;font-size:1.42rem}
+    .stats-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .score-chip{border:1px solid #e9d59d4d;border-radius:12px;padding:9px 14px;background:#ffcc6217;color:#ffdc8e;font-weight:900}
+    .timer-chip{border:1px solid #96f8e35c;border-radius:12px;padding:9px 14px;background:#4fe6d017;color:#9df7e8;font-weight:950;font-variant-numeric:tabular-nums}
+    .timer-chip.hurry{color:#ffd1d1;background:#ff5c6d24;border-color:#fc7683;animation:pulse .85s infinite alternate}
+    @keyframes pulse{to{transform:scale(1.07)}}
+    .progress-track,.time-track{height:10px;border-radius:100px;background:#ffffff1e;overflow:hidden}
+    .progress-fill{height:100%;width:0;background:linear-gradient(90deg,#8664f8,#f97fc0);transition:width .24s;border-radius:100px}
+    .time-track{height:5px;margin:14px 0 27px;background:#ffffff17}
+    .time-fill{height:100%;background:linear-gradient(90deg,#6ce9cd,#e4f892);width:100%;border-radius:100px;transition:width .12s linear}
+    .question-card{border:1px solid #ffffff26;background:linear-gradient(155deg,#302b65,#26224f);border-radius:26px;padding:clamp(25px,4vw,50px);min-height:225px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:var(--shadow)}
+    .subject{font-size:.8rem;letter-spacing:.11em;text-transform:uppercase;font-weight:900;color:#d7c8ff;margin-bottom:15px}
+    .question-text{font-size:clamp(1.5rem,3vw,2.5rem);line-height:1.25;letter-spacing:-.027em;margin:0;max-width:850px}
+    .answers-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+    .answer{display:flex;align-items:center;gap:15px;text-align:left;min-height:112px;border:3px solid transparent;border-radius:17px;padding:18px;color:#fff;font-weight:850;font-size:clamp(.95rem,1.7vw,1.12rem);line-height:1.4;box-shadow:0 7px 0 #00000028;position:relative;transition:transform .14s,filter .15s,box-shadow .15s}
+    .answer:not(:disabled):hover{transform:translateY(-3px);filter:brightness(1.12)}
+    .answer:disabled{cursor:default}
+    .answer.red{background:#d94b68}.answer.blue{background:#287ed4}.answer.yellow{background:#d6a72b}.answer.green{background:#159e80}
+    .answer.correct{border-color:#f6ffbe;box-shadow:0 0 0 3px #72f0c9,0 8px 30px #33e19c33;filter:brightness(1.05)}
+    .answer.wrong{border-color:#ffcbd4;filter:saturate(.72)}
+    .answer.dim{opacity:.42}
+    .shape-wrap{display:grid;place-items:center;width:43px;min-width:43px;height:43px}
+    .shape{display:block;width:26px;height:26px;background:#fff}
+    .shape.triangle{clip-path:polygon(50% 0,100% 95%,0 95%)}
+    .shape.diamond{transform:rotate(45deg);width:21px;height:21px}
+    .shape.circle{border-radius:50%}
+    .shape.square{width:23px;height:23px}
+    .answer-letter{position:absolute;right:12px;top:10px;color:#ffffffc9;font-weight:950;font-size:.75rem}
+    .feedback{margin-top:18px;border:1px solid #ffffff35;border-radius:17px;padding:20px 22px;background:#ffffff12;display:flex;justify-content:space-between;align-items:center;gap:20px}
+    .feedback.good{background:#1baf8250;border-color:#8df8ce55}
+    .feedback.bad{background:#df647135;border-color:#ffadb55c}
+    .feedback h3{margin:0 0 5px;font-size:1.13rem}
+    .feedback p{margin:0;color:#f3ecff;font-size:.92rem;max-width:650px;line-height:1.55}
+    .feedback button{min-width:182px}
+    .hintline{text-align:center;color:#9f9dbf;font-size:.82rem;margin:23px 0 0}
+    .results-wrap{max-width:880px;margin:0 auto;text-align:center}
+    .results-emoji{font-size:3.6rem;display:block;margin-bottom:6px}
+    .section-title{font-size:clamp(2rem,4vw,3.3rem);letter-spacing:-.04em;margin:10px 0}
+    .result-lead{color:#c7c1e1;margin:0 auto 25px;max-width:640px}
+    .result-card{border-radius:25px;background:linear-gradient(130deg,#302a66,#242049);border:1px solid #ffffff24;padding:28px;box-shadow:var(--shadow)}
+    .result-card h3{margin:0 0 12px;font-size:1.5rem}
+    .results-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+    .stat{background:#ffffff10;border:1px solid #ffffff1a;border-radius:14px;padding:22px 10px}
+    .stat strong{display:block;font-size:clamp(1.6rem,3.5vw,2.7rem);line-height:1.2;font-weight:1000}
+    .stat span{display:block;font-size:.86rem;color:#cec9e7;font-weight:700;margin-top:4px}
+    .result-breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;text-align:left;margin-top:17px}
+    .breakdown-item{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#ffffff0b;border:1px solid #ffffff14;border-radius:10px;padding:11px 14px;font-size:.88rem}
+    .breakdown-item strong{color:#bbffe9}
+    .result-actions{display:flex;gap:13px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:23px}
+    .result-actions button{min-height:52px}
+    .certificate-screen{max-width:1040px;margin:auto;width:100%;text-align:center}
+    .cert-title{font-size:1.8rem;letter-spacing:-.035em;margin:0 0 7px}
+    .cert-subtitle{color:#c3bddb;margin:0 0 20px}
+    .certificate-paper{width:100%;aspect-ratio:1.414/1;min-height:465px;position:relative;overflow:hidden;border-radius:10px;background:#fbf9ff;color:#222345;padding:clamp(23px,4vw,55px);display:flex;flex-direction:column;align-items:center;justify-content:space-between;box-shadow:0 22px 60px #0005;border:9px solid #edddf9;isolation:isolate}
+    .certificate-paper:before{content:"";position:absolute;inset:10px;border:2px solid #9271d1;pointer-events:none;z-index:-1}
+    .certificate-paper:after{content:"";position:absolute;right:-110px;top:-110px;width:350px;height:350px;border:75px solid #ede4ff;border-radius:50%;z-index:-2}
+    .cert-deco{position:absolute;bottom:-78px;left:-78px;width:270px;height:270px;border:65px solid #f5deec;border-radius:50%;z-index:-2}
+    .cert-topline{display:flex;align-items:center;justify-content:space-between;width:100%;font-weight:950;color:#6e5499;letter-spacing:.12em;font-size:clamp(.65rem,1.3vw,.94rem);gap:10px;text-align:left}
+    .cert-seal{display:inline-flex;border:2px solid #9876c7;border-radius:100px;padding:7px 11px;font-size:.8rem;white-space:nowrap}
+    .cert-middle{width:100%;margin:auto 0}
+    .cert-star{font-size:clamp(1.3rem,3vw,2.7rem);color:#9268d3;margin-bottom:8px}
+    .cert-middle h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.1rem,5.1vw,4.4rem);line-height:1;letter-spacing:.055em;color:#36236c;margin:8px 0 3px}
+    .cert-middle .cert-kind{letter-spacing:.4em;font-size:clamp(.7rem,1.5vw,1.17rem);font-weight:900;color:#a66bc7;margin:0 0 clamp(12px,2vw,22px)}
+    .cert-middle .cert-award{color:#6d6881;margin:0 0 4px;font-size:clamp(.75rem,1.2vw,1rem)}
+    .cert-name{font-family:Georgia,"Times New Roman",serif;color:#302469;font-size:clamp(1.35rem,3.3vw,2.9rem);font-weight:800;line-height:1.23;margin:0 auto 11px;max-width:90%;overflow-wrap:anywhere}
+    .cert-desc{font-size:clamp(.69rem,1.3vw,1.09rem);color:#56536f;max-width:730px;margin:0 auto}
+    .cert-desc b{color:#3e2a7a}
+    .cert-scores{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;margin:17px auto 0}
+    .cert-mini{background:#efe9fc;border:1px solid #ddcff8;border-radius:9px;padding:7px 14px;color:#52358b;font-size:clamp(.65rem,1.1vw,.88rem);font-weight:850}
+    .cert-bottom{display:flex;justify-content:space-between;align-items:end;width:100%;gap:10px;color:#68627e;font-size:clamp(.59rem,.99vw,.82rem);text-align:left}
+    .cert-bottom strong{display:block;color:#50387d}
+    footer{text-align:center;padding:13px 0 26px;color:#aca8ca;font-size:.79rem}
+    footer strong{color:#e4d8ff}
+    @media(max-width:850px){.landing{grid-template-columns:1fr;gap:28px}.lead{max-width:760px}main{justify-content:flex-start}.form-card{max-width:680px;width:100%;margin:auto}.app{width:min(100% - 30px,1200px)}.results-wrap{padding-top:10px}.certificate-paper{min-height:430px}}
+    @media(max-width:590px){header{padding:15px 0}.header-actions .chip{display:none}.brand{font-size:.99rem}.brand-icon{width:40px;height:40px}h1{font-size:clamp(2.5rem,10vw,4rem)}.answers-grid{grid-template-columns:1fr;gap:10px}.answer{min-height:75px;padding:13px 15px}.question-card{min-height:200px}.feedback{align-items:stretch;flex-direction:column}.feedback button{width:100%}.results-stats{gap:6px}.stat{padding:16px 5px}.result-breakdown{grid-template-columns:1fr}.certificate-paper{padding:18px 12px;min-height:330px;border-width:5px}.certificate-paper:before{inset:5px}.cert-middle .cert-kind{letter-spacing:.16em}.cert-deco{width:150px;height:150px;border-width:40px;bottom:-55px;left:-50px}.cert-bottom{font-size:.58rem}.cert-topline{font-size:.6rem}.cert-seal{padding:4px 6px;font-size:.59rem}.cert-desc{font-size:.66rem}.cert-mini{padding:5px 7px;font-size:.57rem}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+    @page{size:A4 landscape;margin:0}
+    @media print{html,body{width:297mm;height:210mm;background:white!important;margin:0!important;color:#222}body:before,header,footer,#welcomeScreen,#quizScreen,#resultsScreen,.cert-title,.cert-subtitle,.certificate-actions{display:none!important}.app,main{padding:0!important;margin:0!important;max-width:none!important;min-height:0!important;width:100%!important;display:block!important}.certificate-screen{display:block!important;margin:0!important;max-width:none!important;width:100%!important}.certificate-paper{height:190mm!important;width:277mm!important;min-height:0!important;aspect-ratio:auto!important;margin:10mm!important;padding:15mm!important;box-shadow:none!important;border:2mm solid #edddf9!important;border-radius:2mm!important;break-inside:avoid!important;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}.cert-topline{font-size:14px}.cert-middle h2{font-size:60px}.cert-middle .cert-kind{font-size:15px}.cert-name{font-size:37px}.cert-desc{font-size:16px}.cert-award{font-size:14px}.cert-mini{font-size:12px}.cert-bottom{font-size:12px}.cert-star{font-size:28px}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand"><div class="brand-icon" aria-hidden="true">⌘</div><div>SECUNDARIA<small>RETO TECH · 2.º GRADO</small></div></div>
+      <div class="header-actions"><span class="chip">⚡ 30 preguntas · 6 temas</span><button class="icon-button" id="fullscreenBtn" type="button" title="Pantalla completa">⛶ Pantalla completa</button><button class="icon-button" id="soundBtn" type="button" title="Activar o silenciar los efectos" aria-pressed="false">♫ Sonido: no</button></div>
+    </header>
+    <main>
+      <section id="welcomeScreen" class="screen landing" aria-label="Inicio del cuestionario">
+        <div>
+          <div class="eyebrow"><span class="spark">✦</span> DESAFÍO DE COMPUTACIÓN · 2.º DE SECUNDARIA</div>
+          <h1>¿QUÉ TANTO<br/>SABES DE <span class="gradient-text">TECNOLOGÍA?</span></h1>
+          <p class="lead">Pon a prueba tus conocimientos en un concurso interactivo de 30 preguntas. Elige la respuesta correcta, acumula puntos y recibe tu constancia al terminar.</p>
+          <div class="pillrow" aria-label="Temas del cuestionario"><span class="topic-pill">🖥️ Hardware</span><span class="topic-pill">💿 Software</span><span class="topic-pill">⌨️ Periféricos</span><span class="topic-pill">💬 Netiqueta</span><span class="topic-pill">🌐 Ciudadanía digital</span><span class="topic-pill">🛡️ Ciberseguridad</span></div>
+          <div class="feature-line"><span>✅ <b>30 retos</b></span><span>🏆 <b>Puntuación inmediata</b></span><span>📄 <b>Constancia PDF</b></span></div>
+        </div>
+        <form class="form-card" id="startForm" autocomplete="off">
+          <div class="form-top"><div class="big-emoji" aria-hidden="true">🚀</div><div><h2>¡Es tu turno!</h2><p>Completa tus datos para entrar al reto.</p></div></div>
+          <label for="studentName">Nombre completo</label><input class="form-field" id="studentName" name="studentName" type="text" maxlength="65" placeholder="Escribe tu nombre y apellidos" required autocomplete="off" />
+          <div class="form-row"><div><label for="studentGrade">Grado</label><select id="studentGrade" class="form-field" required><option value="2.º">2.º secundaria</option></select></div><div><label for="studentGroup">Grupo</label><input id="studentGroup" class="form-field" type="text" placeholder="Ej. A" maxlength="12" required autocomplete="off" /></div></div>
+          <label for="timeLimit">Tiempo por pregunta</label><select id="timeLimit" class="form-field"><option value="45">45 segundos (recomendado)</option><option value="30">30 segundos</option><option value="60">60 segundos</option><option value="0">Sin límite de tiempo</option></select>
+          <p class="notice" id="formNotice" aria-live="polite"></p>
+          <button type="submit" class="primary wide">COMENZAR ACTIVIDAD &nbsp; →</button>
+          <p class="privacy">🔒 No se guardan ni se envían tus datos. La constancia se genera en tu dispositivo.</p>
+        </form>
+      </section>
+      <section id="quizScreen" class="screen quiz-layout" hidden aria-label="Preguntas del concurso">
+        <div class="quiz-top"><div class="question-count">PREGUNTA <strong id="questionNumber">1</strong> / 30</div><div class="stats-right"><span class="score-chip">🏆 <span id="livePoints">0</span> pts</span><span class="timer-chip" id="timerChip">⏱ <span id="timerDisplay">45</span> s</span></div></div>
+        <div class="progress-track" role="progressbar" aria-label="Avance del cuestionario" aria-valuemin="0" aria-valuemax="30" aria-valuenow="0" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div><div class="time-track" id="timeTrack"><div class="time-fill" id="timeFill"></div></div>
+        <article class="question-card"><span class="subject" id="topicDisplay">TEMA</span><h2 class="question-text" id="questionText">Pregunta</h2></article>
+        <div id="answersGrid" class="answers-grid" aria-label="Opciones de respuesta"></div>
+        <div id="feedbackBox" class="feedback" hidden role="status" aria-live="polite"><div><h3 id="feedbackTitle"></h3><p id="feedbackText"></p></div><button id="nextBtn" class="primary" type="button">Siguiente →</button></div>
+        <p class="hintline">Selecciona una respuesta. También puedes usar las teclas 1, 2, 3 o 4.</p>
+      </section>
+      <section id="resultsScreen" class="screen results-wrap" hidden aria-label="Resultados del cuestionario">
+        <span class="results-emoji" aria-hidden="true">🏆</span><div class="eyebrow">¡RETO FINALIZADO!</div><h2 class="section-title" id="resultsHeading">¡Buen trabajo!</h2><p class="result-lead" id="resultsSubtitle"></p>
+        <div class="result-card"><h3>Tu resultado final</h3><div class="results-stats"><div class="stat"><strong id="resultCorrect">0/30</strong><span>Respuestas correctas</span></div><div class="stat"><strong id="resultGrade">0%</strong><span>Calificación</span></div><div class="stat"><strong id="resultPoints">0</strong><span>Puntos</span></div></div><div class="result-breakdown" id="resultBreakdown"></div></div>
+        <div class="result-actions"><button type="button" class="primary" id="showCertificateBtn">📄 Ver mi constancia</button><button type="button" class="secondary" id="restartBtn">↻ Volver a jugar</button></div>
+      </section>
+      <section id="certificateScreen" class="screen certificate-screen" hidden aria-label="Constancia de participación">
+        <h2 class="cert-title">Tu constancia está lista 🎉</h2><p class="cert-subtitle">Puedes descargarla directamente como PDF o imprimirla.</p>
+        <div class="certificate-paper" id="certificatePaper">
+          <div class="cert-deco" aria-hidden="true"></div>
+          <div class="cert-topline"><span>✦ SECUNDARIA · TECNOLOGÍA</span><span class="cert-seal">SEGUNDO GRADO</span></div>
+          <div class="cert-middle"><div class="cert-star" aria-hidden="true">✧ ✦ ✧</div><h2>CONSTANCIA</h2><p class="cert-kind">DE PARTICIPACIÓN</p><p class="cert-award">Se otorga a:</p><div class="cert-name" id="certificateName"></div><p class="cert-desc">Por completar el reto interactivo de <b>Computación básica, ciudadanía digital y ciberseguridad</b>, integrado por 30 preguntas.</p><div class="cert-scores"><span class="cert-mini" id="certificateGroup">2.º · Grupo A</span><span class="cert-mini" id="certificateCorrect">0 de 30 aciertos</span><span class="cert-mini" id="certificateScore">0% de desempeño</span></div></div>
+          <div class="cert-bottom"><span><strong id="certificateDate">Fecha</strong>Constancia de participación en actividad de clase</span><span style="text-align:right"><strong>TECNOLOGÍA · SECUNDARIA</strong>Hecho por Diana Padilla Zamora</span></div>
+        </div>
+        <div class="result-actions certificate-actions"><button class="primary" type="button" id="downloadPdfBtn">⬇ Descargar constancia PDF</button><button class="secondary" type="button" id="printBtn">🖨 Imprimir / Guardar como PDF</button><button class="secondary" type="button" id="backResultsBtn">← Volver a resultados</button></div>
+      </section>
+    </main>
+    <footer>Hecho por <strong>Diana Padilla Zamora</strong> · Tecnología · Secundaria</footer>
+  </div>
+  <script>
+    'use strict';
+    // 5 preguntas por cada uno de los 6 temas = 30 preguntas en total.
+    // Cada pregunta incluye exactamente cuatro opciones y el índice de la respuesta correcta.
+    const QUESTIONS = [
+      {topic:'Hardware',q:'¿Qué componente de la computadora ejecuta las instrucciones de los programas?',a:['La memoria USB','El procesador (CPU)','El monitor','El teclado'],correct:1,ex:'La CPU interpreta y ejecuta instrucciones para realizar tareas.'},
+      {topic:'Hardware',q:'¿Qué tipo de memoria pierde su contenido cuando se apaga la computadora?',a:['SSD','Disco duro','Memoria RAM','Memoria USB'],correct:2,ex:'La RAM almacena información temporal mientras el equipo está encendido.'},
+      {topic:'Hardware',q:'¿Cuál de los siguientes elementos es hardware?',a:['Un procesador de textos','Un antivirus','Un navegador','Una tarjeta madre'],correct:3,ex:'El hardware son las partes físicas de un dispositivo.'},
+      {topic:'Hardware',q:'¿Cuál es la función principal de una unidad SSD?',a:['Guardar archivos y programas','Proyectar imágenes','Capturar sonido','Conectarse a una videollamada'],correct:0,ex:'Una SSD almacena datos de forma no volátil, incluso si se apaga el equipo.'},
+      {topic:'Hardware',q:'¿Qué componente procesa los gráficos para mostrarlos en pantalla?',a:['Fuente de alimentación','Tarjeta gráfica (GPU)','Micrófono','Ventilador'],correct:1,ex:'La GPU ayuda a procesar imágenes, videos y gráficos.'},
+      {topic:'Software',q:'¿Qué es un sistema operativo?',a:['Una pieza dentro del gabinete','Un cable de conexión','El programa que administra el equipo y sus recursos','Un dispositivo para imprimir'],correct:2,ex:'El sistema operativo coordina recursos y permite ejecutar aplicaciones.'},
+      {topic:'Software',q:'¿Cuál es un ejemplo de software de aplicación?',a:['Google Docs','Memoria RAM','Tarjeta madre','Procesador'],correct:0,ex:'Google Docs es una aplicación que permite crear y editar documentos.'},
+      {topic:'Software',q:'¿Qué significa actualizar un programa?',a:['Desconectar la computadora','Borrar todos los documentos','Cambiar el teclado','Instalar una versión más reciente'],correct:3,ex:'Las actualizaciones pueden corregir fallos, mejorar funciones y reforzar la seguridad.'},
+      {topic:'Software',q:'¿Cómo se clasifica un navegador como Chrome o Firefox?',a:['Hardware de entrada','Software de aplicación','Memoria principal','Sistema de enfriamiento'],correct:1,ex:'Los navegadores son programas que permiten acceder a sitios y aplicaciones web.'},
+      {topic:'Software',q:'¿Por qué es mejor instalar aplicaciones desde fuentes oficiales?',a:['Porque nunca necesitan internet','Porque ocupan cero espacio','Porque reduce el riesgo de instalar programas maliciosos','Porque hacen más rápido cualquier equipo'],correct:2,ex:'Las fuentes oficiales suelen ofrecer aplicaciones verificadas y actualizaciones legítimas.'},
+      {topic:'Periféricos',q:'¿Cuál de estos dispositivos es un periférico de entrada?',a:['Bocinas','Proyector','Monitor','Micrófono'],correct:3,ex:'El micrófono introduce audio a la computadora.'},
+      {topic:'Periféricos',q:'¿Cuál es un periférico de salida?',a:['Bocinas','Ratón','Escáner','Teclado'],correct:0,ex:'Las bocinas reproducen el sonido que envía la computadora.'},
+      {topic:'Periféricos',q:'¿Por qué una pantalla táctil puede ser de entrada y salida?',a:['Porque solo almacena archivos','Porque muestra información y detecta toques','Porque imprime documentos','Porque necesita audífonos'],correct:1,ex:'Muestra contenido (salida) y recibe órdenes al tocarla (entrada).'},
+      {topic:'Periféricos',q:'¿Qué hace un escáner?',a:['Enfría la computadora','Reproduce videos','Digitaliza documentos e imágenes físicas','Mejora la conexión Wi-Fi'],correct:2,ex:'Un escáner captura documentos o imágenes para convertirlos en archivos digitales.'},
+      {topic:'Periféricos',q:'¿Cuál es un periférico de almacenamiento externo?',a:['Mouse','Webcam','Micrófono','Memoria USB'],correct:3,ex:'La memoria USB permite almacenar y transportar archivos.'},
+      {topic:'Netiqueta',q:'¿Cómo puede interpretarse un mensaje escrito TOTALMENTE EN MAYÚSCULAS?',a:['Como si la persona estuviera gritando','Como un mensaje secreto','Como una cita obligatoria','Como un mensaje eliminado'],correct:0,ex:'En muchas conversaciones digitales, las mayúsculas sostenidas pueden parecer gritos.'},
+      {topic:'Netiqueta',q:'Si no estás de acuerdo con alguien en un grupo escolar, ¿qué es lo adecuado?',a:['Insultarlo para ganar la discusión','Responder con respeto y argumentos','Publicar sus datos personales','Enviar burlas al grupo'],correct:1,ex:'La netiqueta favorece el diálogo respetuoso incluso cuando existen diferencias.'},
+      {topic:'Netiqueta',q:'Antes de reenviar una noticia sorprendente, ¿qué conviene hacer?',a:['Reenviarla de inmediato','Cambiarle el título','Verificarla en fuentes confiables','Ponerla en mayúsculas'],correct:2,ex:'Verificar la información ayuda a evitar la difusión de rumores y noticias falsas.'},
+      {topic:'Netiqueta',q:'Durante una videollamada escolar, ¿qué acción muestra consideración?',a:['Interrumpir a quien explica','Activar sonidos fuertes','Compartir la liga públicamente','Silenciar el micrófono cuando no hablas'],correct:3,ex:'Silenciar el micrófono reduce interrupciones y ruidos para todos.'},
+      {topic:'Netiqueta',q:'¿Cómo es recomendable escribir un correo a tu docente?',a:['Con asunto claro, saludo y lenguaje respetuoso','Sin asunto ni explicación','Solo con emojis','Con exigencias y mayúsculas'],correct:0,ex:'Un correo claro y cortés facilita la comunicación académica.'},
+      {topic:'Ciudadanía digital',q:'¿Qué es la huella digital?',a:['Una contraseña biométrica únicamente','El rastro de información que dejan nuestras actividades en línea','El número de serie de una computadora','Una marca en el monitor'],correct:1,ex:'Publicaciones, comentarios e interacciones pueden formar parte de nuestra huella digital.'},
+      {topic:'Ciudadanía digital',q:'¿Qué debes considerar antes de usar una imagen encontrada en internet?',a:['Que tenga colores llamativos','Que aparezca en la primera búsqueda','Los derechos de uso, permisos y atribución','Que otras personas también la copien'],correct:2,ex:'No todas las imágenes se pueden reutilizar libremente; revisa su licencia o permiso.'},
+      {topic:'Ciudadanía digital',q:'¿Qué sucede si publicas datos personales de un compañero sin su permiso?',a:['Lo ayudas a ganar seguidores','No tiene ninguna consecuencia','Proteges su cuenta','Puedes vulnerar su privacidad'],correct:3,ex:'La ciudadanía digital implica respetar la privacidad y el consentimiento.'},
+      {topic:'Ciudadanía digital',q:'¿Qué característica ayuda a identificar una fuente de información confiable?',a:['Presenta autor, fecha y evidencias verificables','Tiene muchos emojis','Usa un título exagerado','Pide compartir antes de leer'],correct:0,ex:'Conocer el autor, la fecha y las evidencias permite evaluar la credibilidad.'},
+      {topic:'Ciudadanía digital',q:'¿Qué significa la accesibilidad digital?',a:['Que toda aplicación sea de pago','Que las tecnologías puedan ser utilizadas por personas con distintas necesidades','Que solo funcione en computadoras nuevas','Que nadie necesite contraseñas'],correct:1,ex:'La accesibilidad busca reducir barreras de uso para personas con capacidades diversas.'},
+      {topic:'Ciberseguridad',q:'¿Qué es el phishing?',a:['Un sistema para reparar pantallas','Un programa para diseñar imágenes','Un engaño para obtener información confidencial','Un tipo de impresora'],correct:2,ex:'El phishing usa mensajes o sitios falsos para intentar robar datos.'},
+      {topic:'Ciberseguridad',q:'¿Cuál es una mejor práctica para crear contraseñas?',a:['Utilizar tu fecha de nacimiento','Usar la misma en todas tus cuentas','Compartirla con amistades','Crear una contraseña larga, única y difícil de adivinar'],correct:3,ex:'Las contraseñas largas y únicas ayudan a proteger cada cuenta.'},
+      {topic:'Ciberseguridad',q:'¿Para qué sirve la verificación en dos pasos?',a:['Añadir una comprobación extra al iniciar sesión','Eliminar todas las contraseñas','Acelerar la descarga de videos','Permitir que todos entren a tu cuenta'],correct:0,ex:'Añade una segunda barrera que dificulta el acceso no autorizado.'},
+      {topic:'Ciberseguridad',q:'Recibes un archivo inesperado de un remitente desconocido. ¿Qué haces?',a:['Lo abres para investigar','No lo abres y verificas su procedencia','Lo reenvías a tu grupo','Desactivas el antivirus'],correct:1,ex:'Los archivos sospechosos pueden contener software malicioso o enlaces peligrosos.'},
+      {topic:'Ciberseguridad',q:'Si sospechas que alguien entró a tu cuenta, ¿cuál es una acción adecuada?',a:['Publicar tu contraseña en el grupo','Ignorar las alertas','Cambiar la contraseña desde el sitio oficial y pedir ayuda a una persona adulta de confianza','Enviar más datos personales'],correct:2,ex:'Conviene proteger el acceso desde la plataforma oficial y buscar apoyo.'}
+    ];
+
+    const $ = id => document.getElementById(id);
+    const screens = ['welcomeScreen','quizScreen','resultsScreen','certificateScreen'];
+    const topicEmoji = {'Hardware':'🖥️','Software':'💿','Periféricos':'⌨️','Netiqueta':'💬','Ciudadanía digital':'🌐','Ciberseguridad':'🛡️'};
+    const shapes = ['triangle','diamond','circle','square'];
+    const colors = ['red','blue','yellow','green'];
+    let session = null, timerHandle = null, timerDeadline = 0, soundOn = false, audioCtx = null;
+
+    function showScreen(id){screens.forEach(s => {$(s).hidden = s !== id;});window.scrollTo({top:0,behavior:'instant'});}
+    function shuffle(array){const copy = [...array];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]];}return copy;}
+    function sound(freq=550,dur=.11){if(!soundOn)return;try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;audioCtx=audioCtx||new AC();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,audioCtx.currentTime);gain.gain.setValueAtTime(.09,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);osc.connect(gain);gain.connect(audioCtx.destination);osc.start();osc.stop(audioCtx.currentTime+dur);}catch(_e){/* audio optional */}}
+    function cleanName(value){return value.replace(/\s+/g,' ').trim();}
+
+    $('startForm').addEventListener('submit',e=>{
+      e.preventDefault();const name=cleanName($('studentName').value),group=cleanName($('studentGroup').value).toUpperCase();
+      if(name.length<3 || group.length<1){$('formNotice').textContent='Escribe tu nombre completo y tu grupo para comenzar.';return;}
+      $('formNotice').textContent='';const limit=Number($('timeLimit').value);
+      session={name,grade:'2.º',group,limit,index:0,correct:0,points:0,answers:[],locked:false,questions:shuffle(QUESTIONS).map(question=>{
+        const options=shuffle(question.a.map((text,i)=>({text,isCorrect:i===question.correct})));
+        return {...question,options};
+      })};
+      $('timerChip').hidden=limit===0;$('timeTrack').hidden=limit===0;
+      showScreen('quizScreen');displayQuestion();sound(680,.14);
+    });
+
+    function stopTimer(){if(timerHandle){clearInterval(timerHandle);timerHandle=null;}}
+    function tick(){if(!session || session.locked)return;const remaining=Math.max(0,(timerDeadline-Date.now())/1000);$('timerDisplay').textContent=Math.ceil(remaining);$('timeFill').style.width=(100*remaining/session.limit)+'%';$('timerChip').classList.toggle('hurry',remaining<=10);if(remaining<=0){stopTimer();answerQuestion(-1);}}
+    function displayQuestion(){
+      stopTimer();session.locked=false;
+      const question=session.questions[session.index];
+      $('questionNumber').textContent=session.index+1;
+      $('topicDisplay').textContent=(topicEmoji[question.topic]||'')+' '+question.topic;
+      $('questionText').textContent=question.q;
+      $('livePoints').textContent=session.points.toLocaleString('es-MX');
+      $('progressFill').style.width=((session.index/QUESTIONS.length)*100)+'%';
+      $('progressTrack').setAttribute('aria-valuenow',String(session.index));
+      $('feedbackBox').hidden=true;$('feedbackBox').className='feedback';
+      const grid=$('answersGrid');grid.replaceChildren();
+      question.options.forEach((opt,i)=>{
+        const btn=document.createElement('button');btn.className='answer '+colors[i];btn.type='button';btn.dataset.option=String(i);
+        const shapeWrap=document.createElement('span');shapeWrap.className='shape-wrap';shapeWrap.setAttribute('aria-hidden','true');
+        const shape=document.createElement('span');shape.className='shape '+shapes[i];shapeWrap.appendChild(shape);
+        const text=document.createElement('span');text.textContent=opt.text;
+        const letter=document.createElement('span');letter.className='answer-letter';letter.textContent=String(i+1);
+        btn.append(shapeWrap,text,letter);btn.addEventListener('click',()=>answerQuestion(i));grid.appendChild(btn);
+      });
+      if(session.limit){$('timerChip').classList.remove('hurry');$('timerDisplay').textContent=session.limit;$('timeFill').style.width='100%';timerDeadline=Date.now()+session.limit*1000;timerHandle=setInterval(tick,100);}
+    }
+    function answerQuestion(selectedIndex){
+      if(!session || session.locked)return;
+      session.locked=true;stopTimer();const q=session.questions[session.index],correctIndex=q.options.findIndex(o=>o.isCorrect),isCorrect=selectedIndex===correctIndex;
+      if(isCorrect){session.correct++;session.points+=100;sound(850,.12);setTimeout(()=>sound(1080,.14),105);}else{sound(240,.24);}
+      session.answers.push({topic:q.topic,correct:isCorrect,timedOut:selectedIndex<0});
+      Array.from($('answersGrid').children).forEach((btn,i)=>{btn.disabled=true;btn.classList.add(i===correctIndex?'correct':i===selectedIndex?'wrong':'dim');});
+      $('livePoints').textContent=session.points.toLocaleString('es-MX');
+      $('feedbackBox').hidden=false;$('feedbackBox').className='feedback '+(isCorrect?'good':'bad');
+      $('feedbackTitle').textContent=isCorrect?'✅ ¡Respuesta correcta!':selectedIndex<0?'⏱ Se terminó el tiempo':'💡 Sigamos aprendiendo';
+      $('feedbackText').textContent=(isCorrect?'':`Respuesta correcta: ${q.options[correctIndex].text}. `)+q.ex;
+      $('nextBtn').textContent=session.index===QUESTIONS.length-1?'Ver mis resultados →':'Siguiente pregunta →';
+      $('nextBtn').focus({preventScroll:true});
+      $('feedbackBox').scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+    $('nextBtn').addEventListener('click',()=>{if(!session?.locked)return;session.index++;if(session.index>=QUESTIONS.length){finishGame();}else{displayQuestion();}});
+    document.addEventListener('keydown',e=>{if($('quizScreen').hidden||!session||session.locked||e.altKey||e.ctrlKey||e.metaKey||e.repeat)return;const index=Number(e.key)-1;if(index>=0&&index<4)answerQuestion(index);});
+
+    function finishGame(){
+      stopTimer();const ratio=Math.round(100*session.correct/QUESTIONS.length);
+      $('progressFill').style.width='100%';$('resultCorrect').textContent=session.correct+' / '+QUESTIONS.length;
+      $('resultGrade').textContent=ratio+'%';$('resultPoints').textContent=session.points.toLocaleString('es-MX');
+      $('resultsHeading').textContent=ratio>=90?'¡Excelente dominio del tema!':ratio>=70?'¡Muy buen trabajo!':ratio>=50?'¡Reto completado!':'¡Terminaste los 30 retos!';
+      $('resultsSubtitle').textContent=`${session.name}, completaste el desafío de segundo de secundaria. Revisa tus resultados por tema y descarga tu constancia de participación.`;
+      const breakdown=$('resultBreakdown');breakdown.replaceChildren();
+      Object.keys(topicEmoji).forEach(topic=>{const count=session.answers.filter(r=>r.topic===topic&&r.correct).length;const item=document.createElement('div');item.className='breakdown-item';const name=document.createElement('span');name.textContent=topicEmoji[topic]+' '+topic;const val=document.createElement('strong');val.textContent=count+' / 5';item.append(name,val);breakdown.appendChild(item);});
+      showScreen('resultsScreen');sound(1000,.16);
+    }
+    function showCertificate(){
+      if(!session||session.answers.length!==QUESTIONS.length)return;
+      const ratio=Math.round(100*session.correct/QUESTIONS.length);
+      $('certificateName').textContent=session.name;
+      $('certificateGroup').textContent=session.grade+' secundaria · Grupo '+session.group;
+      $('certificateCorrect').textContent=session.correct+' de 30 aciertos';$('certificateScore').textContent=ratio+'% de desempeño';
+      $('certificateDate').textContent=new Intl.DateTimeFormat('es-MX',{day:'numeric',month:'long',year:'numeric'}).format(new Date());
+      showScreen('certificateScreen');
+    }
+    $('showCertificateBtn').addEventListener('click',showCertificate);
+    $('backResultsBtn').addEventListener('click',()=>showScreen('resultsScreen'));
+    $('restartBtn').addEventListener('click',()=>{stopTimer();session=null;showScreen('welcomeScreen');$('studentName').focus();});
+    $('printBtn').addEventListener('click',()=>window.print());
+    $('soundBtn').addEventListener('click',()=>{soundOn=!soundOn;$('soundBtn').textContent=soundOn?'♫ Sonido: sí':'♫ Sonido: no';$('soundBtn').setAttribute('aria-pressed',String(soundOn));if(soundOn)sound(690,.12);});
+    $('fullscreenBtn').addEventListener('click',async()=>{try{if(document.fullscreenElement){await document.exitFullscreen();}else if(document.documentElement.requestFullscreen){await document.documentElement.requestFullscreen();}else{alert('Puedes usar F11 para ver la página en pantalla completa.');}}catch(_e){alert('Para pantalla completa, utiliza F11 en tu navegador.');}});
+
+    // Generador de PDF autónomo: no necesita CDN, bibliotecas, internet ni cuentas.
+    // Produce un A4 apaisado con texto vectorial, usando Helvetica + WinAnsiEncoding.
+    function pdfBytes(s){const map={'€':128,'‚':130,'ƒ':131,'„':132,'…':133,'†':134,'‡':135,'ˆ':136,'‰':137,'Š':138,'‹':139,'Œ':140,'Ž':142,'‘':145,'’':146,'“':147,'”':148,'•':149,'–':150,'—':151,'˜':152,'™':153,'š':154,'›':155,'œ':156,'ž':158,'Ÿ':159};return Uint8Array.from(Array.from(s).map(c=>{const code=c.charCodeAt(0);return code<=255?code:(map[c]??63);}));}
+    function pdfLiteral(s){return Array.from(s).map(c=>c==='\\'?'\\\\':c==='('? '\\(':c===')'?'\\)':c==='\r'||c==='\n'?' ':c).join('');}
+    function buildPdf(){
+      const W=842,H=595, commands=[];
+      const rgb=(r,g,b)=>[r/255,g/255,b/255].map(x=>x.toFixed(4)).join(' ');
+      const fill=(x,y,w,h,color)=>commands.push(`${rgb(...color)} rg ${x} ${y} ${w} ${h} re f`);
+      const line=(x1,y1,x2,y2,color,width=1)=>commands.push(`${rgb(...color)} RG ${width} w ${x1} ${y1} m ${x2} ${y2} l S`);
+      const circle=(cx,cy,r,color)=>{const k=.55228475*r;commands.push(`${rgb(...color)} rg ${cx+r} ${cy} m ${cx+r} ${cy+k} ${cx+k} ${cy+r} ${cx} ${cy+r} c ${cx-k} ${cy+r} ${cx-r} ${cy+k} ${cx-r} ${cy} c ${cx-r} ${cy-k} ${cx-k} ${cy-r} ${cx} ${cy-r} c ${cx+k} ${cy-r} ${cx+r} ${cy-k} ${cx+r} ${cy} c f`);};
+      const measure=(t,size,bold)=>{const canvas=document.createElement('canvas');const c=canvas.getContext('2d');if(c){c.font=`${bold?'bold ':''}${size}px Helvetica,Arial,sans-serif`;return c.measureText(t).width;}return t.length*size*.55;};
+      const txt=(t,x,y,size,color=[35,33,72],bold=false,center=false)=>{
+        const safe=Array.from(String(t)).map(c=>{const code=c.charCodeAt(0);return code<=255||'€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ'.includes(c)?c:'?';}).join('');
+        if(center)x-=measure(safe,size,bold)/2;
+        commands.push(`${rgb(...color)} rg BT /${bold?'F2':'F1'} ${size} Tf 1 0 0 1 ${x.toFixed(2)} ${y.toFixed(2)} Tm (${pdfLiteral(safe)}) Tj ET`);
+      };
+      const ink=[48,35,105],violet=[112,69,179],lilac=[155,107,205];
+      fill(0,0,W,H,[241,233,252]);fill(20,20,802,555,[252,250,255]);
+      fill(31,31,7,533,[152,107,211]);fill(804,31,7,533,[152,107,211]);fill(31,31,780,7,[152,107,211]);fill(31,557,780,7,[152,107,211]);
+      fill(31,31,12,533,[117,80,193]);
+      circle(802,554,95,[240,228,255]);circle(790,547,56,[250,244,255]);circle(41,37,70,[251,227,243]);
+      txt('SECUNDARIA  /  TECNOLOGÍA',74,531,14,violet,true);
+      txt('SEGUNDO GRADO',767,531,12,violet,true,true);
+      line(75,515,767,515,[216,195,237],1.2);
+      txt('CONSTANCIA',421,448,49,ink,true,true);
+      txt('D E   P A R T I C I P A C I Ó N',421,417,15,lilac,true,true);
+      txt('Se otorga a:',421,373,15,[105,100,127],false,true);
+      const name=session.name;
+      let nameSize=name.length>44?24:name.length>32?29:name.length>22?34:40;
+      while(nameSize>19 && measure(name,nameSize,true)>672)nameSize-=1;
+      txt(name,421,329,nameSize,ink,true,true);
+      line(155,309,687,309,[170,138,212],1.4);
+      txt('Por completar el reto interactivo de 30 preguntas sobre',421,276,15,[78,74,106],false,true);
+      txt('Computación básica, ciudadanía digital y ciberseguridad',421,251,16,violet,true,true);
+      fill(165,185,157,39,[239,232,251]);fill(342,185,157,39,[239,232,251]);fill(519,185,157,39,[239,232,251]);
+      txt(`${session.grade} · Grupo ${session.group}`,243,199,13,violet,true,true);
+      txt(`${session.correct} de 30 aciertos`,420,199,13,violet,true,true);
+      txt(`${Math.round(session.correct/30*100)}% de desempeño`,597,199,13,violet,true,true);
+      line(75,126,767,126,[216,195,237],1.2);
+      const date=new Intl.DateTimeFormat('es-MX',{day:'numeric',month:'long',year:'numeric'}).format(new Date());
+      txt(date,76,104,13,ink,true);txt('Constancia de participación en actividad de clase',76,86,10,[108,100,129]);
+      txt('TECNOLOGÍA  ·  SECUNDARIA',766,104,12,violet,true,true);
+      txt('Hecho por Diana Padilla Zamora',766,86,10,[108,100,129],false,true);
+      const stream=commands.join('\n')+'\n';
+      const objects=[
+        '<< /Type /Catalog /Pages 2 0 R >>',
+        '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+        `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>`,
+        `<< /Length ${pdfBytes(stream).length} >>\nstream\n${stream}endstream`,
+        '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>',
+        '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>'
+      ];
+      const chunks=[],offsets=[0];let length=0;
+      function append(s){const chunk=pdfBytes(s);chunks.push(chunk);length+=chunk.length;}
+      append('%PDF-1.4\n%âãÏÓ\n');
+      objects.forEach((o,i)=>{offsets.push(length);append(`${i+1} 0 obj\n${o}\nendobj\n`);});
+      const xrefOffset=length;
+      append(`xref\n0 ${objects.length+1}\n0000000000 65535 f \n`);
+      offsets.slice(1).forEach(o=>append(String(o).padStart(10,'0')+' 00000 n \n'));
+      append(`trailer\n<< /Size ${objects.length+1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`);
+      const bytes=new Uint8Array(length);let pos=0;chunks.forEach(ch=>{bytes.set(ch,pos);pos+=ch.length;});
+      return new Blob([bytes],{type:'application/pdf'});
+    }
+    $('downloadPdfBtn').addEventListener('click',()=>{
+      if(!session||session.answers.length!==30)return;
+      try{const blob=buildPdf(),url=URL.createObjectURL(blob),a=document.createElement('a');
+        const safeName=session.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'_').replace(/^_|_$/g,'').slice(0,45)||'alumno';
+        a.href=url;a.download=`Constancia_Tecnologia_${safeName}.pdf`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),15000);
+      }catch(err){console.error('Error al generar PDF:',err);alert('No se pudo descargar el PDF. Utiliza «Imprimir / Guardar como PDF» como alternativa.');}
+    });
+  </script>
+</body>
+</html>
